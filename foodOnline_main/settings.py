@@ -137,12 +137,22 @@ STATIC_ROOT = BASE_DIR /'media'
 
 MAILERS = {
     'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
+        'BACKEND': 'django.core.mail.backends.smtp.EmailBackend',
+        'OPTIONS': {
+            'host': config('EMAIL_HOST'),
+            'port': config('EMAIL_PORT', cast=int),
+            'username': config('EMAIL_HOST_USER'),
+            'password': config('EMAIL_HOST_PASSWORD'),
+            'use_tls': True,
+        },
     },
 }
+
+DEFAULT_FROM_EMAIL = 'Toos Link <django.mgamboa.2405@gmail.com>'
 
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
     50: 'critical',
 }
+
